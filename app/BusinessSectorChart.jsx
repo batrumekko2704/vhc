@@ -1,38 +1,13 @@
 import {
     useQuery,
 } from '@tanstack/react-query'
-import {ResponsivePie} from '@nivo/pie'
-import dayjs from "dayjs";
-import * as constants from "@/app/constants";
+import {ResponsivePie} from "@nivo/pie";
 
-const data = [
-    {
-        "id": "ruby",
-        "value": 315,
-    },
-    {
-        "id": "rust",
-        "value": 340,
-    },
-    {
-        "id": "scala",
-        "value": 541,
-    },
-    {
-        "id": "hack",
-        "value": 146,
-    },
-    {
-        "id": "haskell",
-        "value": 581,
-    }
-]
-
-export default function CustomerCityChart() {
+export default function BusinessSectorChart() {
     const {isPending, error, data: fetchedData} = useQuery({
-        queryKey: ['customerData'],
+        queryKey: ['businessSector'],
         queryFn: () =>
-            fetch('/api/customer', {
+            fetch('/api/customer?count&target=business_sector', {
                 method: 'POST'
             }).then((res) =>
                 res.json(),
@@ -43,38 +18,20 @@ export default function CustomerCityChart() {
 
     if (error) return 'An error has occurred: ' + error.message
 
-    const customerCity = {}
-
-    for (const customer of fetchedData) {
-        if (!(customer.city in customerCity)) {
-            customerCity[customer.city] = 1
-        } else customerCity[customer.city] += 1
-    }
-
     const graphData = []
 
-    // Create sortedCustomerCity array
-    const sortedCustomerCity = Object.keys(customerCity).map(function (key) {
-        return [key, customerCity[key]];
-    });
-
-    // Sort the array based on the second element
-    sortedCustomerCity.sort(function (first, second) {
-        return second[1] - first[1];
-    });
-
-    for (const i in sortedCustomerCity) {
+    for (const data of fetchedData) {
         graphData.push({
-            "id": sortedCustomerCity[i][0],
-            "value": sortedCustomerCity[i][1],
-        })
+            "id": data.business_sector,
+            "label": data.business_sector,
+            "value": data._count.business_sector,
+        },)
     }
 
     return (
         <ResponsivePie
             data={graphData}
-            colors={{ scheme: constants.colorScheme }}
-            margin={{top: 40, right: 80, bottom: 70, left: 0}}
+            margin={{top: 40, right: 50, bottom: 80, left: 80}}
             innerRadius={0.5}
             padAngle={0.7}
             cornerRadius={3}
@@ -105,12 +62,12 @@ export default function CustomerCityChart() {
             }}
             legends={[
                 {
-                    anchor: 'right',
-                    direction: 'column',
+                    anchor: 'bottom',
+                    direction: 'row',
                     justify: false,
-                    translateX: 80,
-                    translateY: 0,
-                    itemsSpacing: 10,
+                    translateX: 0,
+                    translateY: 56,
+                    itemsSpacing: 0,
                     itemWidth: 100,
                     itemHeight: 18,
                     itemTextColor: '#999',

@@ -10,8 +10,9 @@ import {
 } from '@tanstack/react-query'
 
 import OrderProfitChart from "@/app/OrderProfitChart";
-import CustomerCityChart from "@/app/CustomerCityChart"
-import ProductOriginChart from "@/app/ProductOriginChart";
+import CustomerWardChart from "@/app/CustomerWardChart"
+import BusinessSectorChart from "@/app/BusinessSectorChart"
+import ProductTotalChart from "@/app/ProductTotalChart";
 
 const queryClient = new QueryClient()
 
@@ -26,7 +27,7 @@ export default function Home() {
                         borderRadius: '20px',
                         backgroundColor: 'white'
                     }}>
-                        <ProductOriginChart/>
+                        <ProductTotalChart/>
                     </Box>
                 </Grid>
                 <Grid item xs={4}>
@@ -34,15 +35,23 @@ export default function Home() {
                         borderRadius: '20px',
                         backgroundColor: 'white'
                     }}>
-                        <CustomerCityChart/>
+                        <BusinessSectorChart/>
                     </Box>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                     <Box height={'55vh'} sx={{
                         borderRadius: '20px',
                         backgroundColor: 'white'
                     }}>
                         <OrderProfitChart/>
+                    </Box>
+                </Grid>
+                <Grid item xs={6}>
+                    <Box height={'55vh'} sx={{
+                        borderRadius: '20px',
+                        backgroundColor: 'white'
+                    }}>
+                        <CustomerWardChart/>
                     </Box>
                 </Grid>
             </Grid>

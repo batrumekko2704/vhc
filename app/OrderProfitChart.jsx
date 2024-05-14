@@ -5,66 +5,9 @@ import {ResponsiveLine} from '@nivo/line'
 import dayjs from "dayjs";
 import * as constants from "@/app/constants";
 
-const data = [
-    {
-        "id": "japan",
-        "data": [
-            {
-                "x": "plane",
-                "y": 101
-            },
-            {
-                "x": "helicopter",
-                "y": 155
-            },
-            {
-                "x": "boat",
-                "y": 65
-            },
-            {
-                "x": "train",
-                "y": 206
-            },
-            {
-                "x": "subway",
-                "y": 214
-            },
-            {
-                "x": "bus",
-                "y": 35
-            },
-            {
-                "x": "car",
-                "y": 66
-            },
-            {
-                "x": "moto",
-                "y": 139
-            },
-            {
-                "x": "bicycle",
-                "y": 260
-            },
-            {
-                "x": "horse",
-                "y": 273
-            },
-            {
-                "x": "skateboard",
-                "y": 245
-            },
-            {
-                "x": "others",
-                "y": 162
-            }
-        ]
-    },
-]
-
-
 export default function OrderProfitChart() {
     const {isPending, error, data: fetchedData} = useQuery({
-        queryKey: ['orderProfitData'],
+        queryKey: ['orderProfit'],
         queryFn: () =>
             fetch('/api/order', {
                 method: 'POST'

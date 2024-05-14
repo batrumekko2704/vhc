@@ -3,23 +3,13 @@ import {
 } from '@tanstack/react-query'
 import {ResponsiveBar} from '@nivo/bar'
 import * as constants from './constants'
-const data = [
-    {
-        "country": "AD",
-        "hot dog": 7,
-    },
-    {
-        "country": "AE",
-        "hot dog": 19,
-    },
-]
 
-export default function ProductOriginChart() {
+export default function ProductTotalChart() {
 
     const {isPending, error, data: fetchedData} = useQuery({
-        queryKey: ['productOriginData'],
+        queryKey: ['productTotal'],
         queryFn: () =>
-            fetch('/api/product', {
+            fetch('/api/order?sum&target=total_money&take=10', {
                 method: 'POST'
             }).then((res) =>
                 res.json(),
@@ -30,24 +20,15 @@ export default function ProductOriginChart() {
 
     if (error) return 'An error has occurred: ' + error.message
 
-    const productOrigin = {}
-
-    for (const product of fetchedData) {
-        if (!(product.origin in productOrigin)) {
-            productOrigin[product.origin] = 1
-        } else productOrigin[product.origin] += 1
-    }
-
     const graphData = []
 
-    for (const origin in productOrigin) {
+    for (const data of fetchedData) {
+        console.log(data)
         graphData.push({
-            "origin": origin,
-            "Value": productOrigin[origin],
+            "product_id": data.product_id,
+            "Value": data._sum.total_money,
         })
     }
-
-    console.log(graphData)
 
     return (
         <ResponsiveBar
@@ -55,9 +36,9 @@ export default function ProductOriginChart() {
             keys={[
                 'Value',
             ]}
-            indexBy="origin"
+            indexBy="product_id"
             margin={{top: 50, right: 130, bottom: 50, left: 60}}
-            colors={{ scheme: constants.colorScheme }}
+            colors={{scheme: constants.colorScheme}}
             padding={0.3}
             valueScale={{type: 'linear'}}
             indexScale={{type: 'band', round: true}}
@@ -67,7 +48,7 @@ export default function ProductOriginChart() {
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,
-                legend: 'Origin',
+                legend: 'Product ID',
                 legendPosition: 'middle',
                 legendOffset: 32,
                 truncateTickAt: 0
@@ -79,7 +60,10 @@ export default function ProductOriginChart() {
                 legend: 'Value',
                 legendPosition: 'middle',
                 legendOffset: -40,
-                truncateTickAt: 0
+                truncateTickAt: 0,
+                format: (e => {
+                    return e / 1000000
+                })
             }}
             labelSkipWidth={12}
             labelSkipHeight={12}
@@ -117,7 +101,9 @@ export default function ProductOriginChart() {
                 }
             ]}
             role="application"
-            ariaLabel="Nivo bar chart demo"
+            label={e => {
+                return Math.round(e.value / 1000) / 1000
+            }}
         />
     )
 }
