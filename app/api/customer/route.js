@@ -1,5 +1,4 @@
 import {PrismaClient} from '@prisma/client'
-import {parse} from "next/dist/build/swc";
 
 const prisma = new PrismaClient()
 

@@ -2,7 +2,7 @@ import {
     useQuery,
 } from '@tanstack/react-query'
 import {ResponsiveBar} from '@nivo/bar'
-import * as constants from './constants'
+import * as constants from '../../constants'
 
 export default function ProductTotalChart() {
 
@@ -23,7 +23,6 @@ export default function ProductTotalChart() {
     const graphData = []
 
     for (const data of fetchedData) {
-        console.log(data)
         graphData.push({
             "product_id": data.product_id,
             "Value": data._sum.total_money,

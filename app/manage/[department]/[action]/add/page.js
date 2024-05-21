@@ -9,8 +9,8 @@ import {
     QueryClientProvider,
 } from '@tanstack/react-query'
 
-import OrderProfitChart from "@/app/OrderProfitChart";
-import CustomerWardChart from "@/app/CustomerWardChart"
+import OrderProfitChart from "@/app/chart/OrderProfitChart";
+import CustomerWardChart from "@/app/chart/CustomerWardChart"
 import {Autocomplete, Button, TextField} from "@mui/material";
 
 const queryClient = new QueryClient()

@@ -3,7 +3,7 @@ import {
 } from '@tanstack/react-query'
 import {ResponsiveLine} from '@nivo/line'
 import dayjs from "dayjs";
-import * as constants from "@/app/constants";
+import * as constants from "@/app/manage/[department]/[action]/constants";
 
 export default function OrderProfitChart() {
     const {isPending, error, data: fetchedData} = useQuery({
